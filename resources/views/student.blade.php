@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>hello this is welcome user dashboard</h1>
+    <h2>Hemant marks in science: {{ $hemantScience }}</h2>
 </body>
 </html>
