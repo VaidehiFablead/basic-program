@@ -42,25 +42,6 @@ Route::get('login', [LoginController::class, 'showLogin']);
 
 Route::Post('login', [LoginController::class, 'login'])->name('login.check');
 
-
-// Route::get('welcome', function () {
-//     return view('welcome');
-// })->middleware('login');
-
-// Route::get('/', function () {
-//     return view('login');
-// })->middleware('auth');
-
-// Route::get('/profile', function () {
-//     return "User welcome";
-// })->middleware('ensure.user');
-
-// Route::get('/', function () {
-//     return view('login');
-// });
-
-
-
 // for display studentlogin form
 Route::get('/', [StudentsController::class, 'showForm'])->name('login');
 
