@@ -6,6 +6,10 @@ use App\Http\Controllers\NumberController;
 use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\SortController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\StudentsRegController;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,21 +38,6 @@ Route::get('sort', [SortController::class, 'arraySort']);
 Route::get('student', [StudentController::class, 'studentMarks']);
 
 
-// Route::get('/login',function(){
-//     return view('login');
-// });
-
-// Route::get('/dashboard',function(){
-//     return "Welcome back";
-// })->middleware('auth');
-
-// Route::middleware(['check.age'])->group(function () {
-//     Route::get('/welcome', function () {
-//         return 'Welcome Admin!';
-//     });
-// });
-
-
 Route::get('login', [LoginController::class, 'showLogin']);
 
 Route::Post('login', [LoginController::class, 'login'])->name('login.check');
@@ -58,14 +47,50 @@ Route::Post('login', [LoginController::class, 'login'])->name('login.check');
 //     return view('welcome');
 // })->middleware('login');
 
-Route::get('/', function () {
-    return view('login');
-})->middleware('auth');
+// Route::get('/', function () {
+//     return view('login');
+// })->middleware('auth');
 
-Route::get('/profile', function () {
-    return "User welcome";
-})->middleware('ensure.user');
+// Route::get('/profile', function () {
+//     return "User welcome";
+// })->middleware('ensure.user');
 
-Route::get('/login', function () {
-    return view('login');
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+
+
+// for display studentlogin form
+Route::get('/', [StudentsController::class, 'showForm'])->name('login');
+
+// for login student
+
+Route::post('/students', [StudentsController::class, 'login'])->name('students');
+
+// Route::middleware('studentauth')->group(function(){
+//     Route::get('/studentDashboard',function(){
+//         return view('stu dentdashboard');
+//     });
+// });
+
+
+// Logout
+Route::get('/logout', [StudentsController::class, 'logout']);
+
+Route::post('/students/login', [StudentsController::class, 'login'])->name('students.login');
+
+
+// Route::middleware('auth:student')->group(function () {
+//     Route::get('/studentDashboard', function () {
+//         return response()->json(['message' => 'Welcome to dashboard']);
+//     });
+// });
+
+
+Route::middleware('auth:student')->group(function () {
+    Route::get('/studentDashboard', function () {
+        return view('studentdashboard');
+    });
 });
+    
