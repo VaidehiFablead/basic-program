@@ -1,13 +1,19 @@
 <?php
 
+use App\Http\Controllers\DisplayEmpController;
 use App\Http\Controllers\DuplicateController;
+use App\Http\Controllers\EmpController;
+use App\Http\Controllers\EmpLoginController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NumberController;
 use App\Http\Controllers\ObjectController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SortController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StudentsRegController;
+use App\Models\Emp;
+use App\Models\Salary;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -25,29 +31,29 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('oddeven', [NumberController::class, 'oddEvenNumber']);
+// Route::get('oddeven', [NumberController::class, 'oddEvenNumber']);
 
-Route::get('minmax', [NumberController::class, 'minMax']);
+// Route::get('minmax', [NumberController::class, 'minMax']);
 
-Route::get('object', [ObjectController::class, 'object']);
+// Route::get('object', [Objec/tController::class, 'object']);
 
-Route::get('duplicate', [DuplicateController::class, 'duplicate']);
+// Route::get('duplicate', [DuplicateController::class, 'duplicate']);
 
-Route::get('sort', [SortController::class, 'arraySort']);
+// Route::get('sort', [SortController::class, 'arraySort']);
 
-Route::get('student', [StudentController::class, 'studentMarks']);
+// Route::get('student', [StudentController::class, 'studentMarks']);
 
 
-Route::get('login', [LoginController::class, 'showLogin']);
+// Route::get('login', [LoginController::class, 'showLogin']);
 
-Route::Post('login', [LoginController::class, 'login'])->name('login.check');
+// Route::Post('login', [LoginController::class, 'login'])->name('login.check');
 
 // for display studentlogin form
-Route::get('/', [StudentsController::class, 'showForm'])->name('login');
+// Route::get('/', [StudentsController::class, 'showForm'])->name('login');
 
 // for login student
 
-Route::post('/students', [StudentsController::class, 'login'])->name('students');
+// Route::post('/students', [StudentsController::class, 'login'])->name('students');
 
 // Route::middleware('studentauth')->group(function(){
 //     Route::get('/studentDashboard',function(){
@@ -57,9 +63,9 @@ Route::post('/students', [StudentsController::class, 'login'])->name('students')
 
 
 // Logout
-Route::get('/logout', [StudentsController::class, 'logout']);
+// Route::get('/logout', [StudentsController::class, 'logout']);
 
-Route::post('/students/login', [StudentsController::class, 'login'])->name('students.login');
+// Route::post('/students/login', [StudentsController::class, 'login'])->name('students.login');
 
 
 // Route::middleware('auth:student')->group(function () {
@@ -69,9 +75,52 @@ Route::post('/students/login', [StudentsController::class, 'login'])->name('stud
 // });
 
 
-Route::middleware('auth:student')->group(function () {
-    Route::get('/studentDashboard', function () {
-        return view('studentdashboard');
-    });
-});
-    
+// Route::middleware('auth:student')->group(function () {
+//     Route::get('/studentDashboard', function () {
+//         return view('studentdashboard');
+//     });
+// });
+
+
+
+
+// Emp
+Route::get('/', [EmpController::class, 'showForm']); // shows the form
+Route::post('/insert', [EmpController::class, 'store'])->name('emp.store');
+
+// Salary
+Route::get('/salary', [SalaryController::class, 'showForm']); // shows the form
+// Route::post('/insert', [SalaryController::class, 'store'])->name('salary.store');
+Route::get('/salary', [SalaryController::class, 'createSalaryForm']);
+Route::post('/salary/store', [SalaryController::class, 'store'])->name('salary.store');
+
+
+// display emp
+Route::get('/displayEmp', [DisplayEmpController::class, 'display'])->name('displayEmp');
+Route::get('/displayEmp', [DisplayEmpController::class, 'showSalaryTable']);
+
+
+// edit
+Route::get('/emp/edit/{id}', [DisplayEmpController::class, 'edit'])->name('emp.edit');
+Route::post('/emp/update/{id}', [DisplayEmpController::class, 'update'])->name('emp.update');
+
+
+
+// emplogin
+// Route::get('/empLogin', [EmpLoginController::class, 'showLogin']); // shows the form
+
+// Route::post('/empLogin', [EmpLoginController::class, 'login'])->name('empLogin.submit');
+
+
+// Route::post('/display-emp', [EmpController::class, 'display'])->name('displayEmp');
+
+
+// Show login page
+Route::get('/empLogin', [EmpLoginController::class, 'showLogin'])->name('empLogin');
+
+// Handle login form submission
+Route::post('/empLogin', [EmpLoginController::class, 'login'])->name('empLogin.submit');
+
+// Show displayEmp page after login
+Route::get('/displayEmp', [DisplayEmpController::class, 'showSalaryTable'])->name('displayEmp');
+
