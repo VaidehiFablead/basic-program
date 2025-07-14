@@ -5,6 +5,7 @@ use App\Http\Controllers\DuplicateController;
 use App\Http\Controllers\EmpController;
 use App\Http\Controllers\EmpLoginController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MultiStepFormController;
 use App\Http\Controllers\NumberController;
 use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\SalaryController;
@@ -124,3 +125,18 @@ Route::post('/empLogin', [EmpLoginController::class, 'login'])->name('empLogin.s
 // Show displayEmp page after login
 Route::get('/displayEmp', [DisplayEmpController::class, 'showSalaryTable'])->name('displayEmp');
 
+Route::get('/swipper', function () {
+    return view('swipper');  // Looks for resources/views/about.blade.php
+});
+
+
+
+// multistep form
+Route::get('/step1', [MultiStepFormController::class, 'step1'])->name('form.step1');
+Route::post('/step1', [MultiStepFormController::class, 'postStep1']);
+
+Route::get('/step2', [MultiStepFormController::class, 'step2'])->name('form.step2');
+Route::post('/step2', [MultiStepFormController::class, 'postStep2']);
+
+Route::get('/step3', [MultiStepFormController::class, 'step3'])->name('form.step3');
+Route::post('/submit', [MultiStepFormController::class, 'submit'])->name('form.submit');

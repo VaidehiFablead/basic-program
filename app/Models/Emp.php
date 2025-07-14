@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Emp extends Model
 {
     use HasFactory;
-    protected $table = 'emp'; // your actual table
+        protected $table = 'emp'; // your actual table
 
-    protected $fillable = [
-        'name',
-        'email',
-        'address',
-        'contact',
-        'branch',
-        'position'
-    ];
+        protected $fillable = [
+            'name',
+            'email',
+            'address',
+            'contact',
+            'branch',
+            'position'
+        ];
 }
